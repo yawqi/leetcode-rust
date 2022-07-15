@@ -25,7 +25,7 @@ impl Solution {
         let mut dp = vec![vec![0; 2]; prices.len() + 1];
         dp[0][1] = i32::MIN;
         for i in 1..=prices.len() {
-            
+            dp[0][1] = 
         }
         dp[prices.len()][0]
     }
