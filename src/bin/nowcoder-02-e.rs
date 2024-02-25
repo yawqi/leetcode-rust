@@ -18,31 +18,30 @@ fn main() {
         edges[v - 1].push(u - 1);
         s.clear();
     }
-    println!("{}", dfs(0, &edges, &mut visited, true) % (1000000007));
+    let mut reds = vec![0; n];
+    let mut whites = vec![0; n];
+    dfs(0, 0, &edges, &mut reds, &mut whites);
+    (reds[0] + whites[0]) % 1000000007
 }
 
 fn dfs(
     node: usize,
+    parent: usize,
     edges: &Vec<Vec<usize>>,
-    visited: &mut Vec<bool>,
-    is_parent_red: bool,
-) -> usize {
+    reds: &mut Vec<usize>,
+    whites: &mut Vec<usize>,
+) {
     let mut ret_r = 1;
     let mut ret_w = 1;
-    visited[node] = true;
+
     for nxt_node in &edges[node] {
-        if visited[*nxt_node] {
+        if *nxt_node == parent {
             continue;
         }
-        ret_r *= dfs(*nxt_node, edges, visited, true);
-        if is_parent_red {
-            ret_w *= dfs(*nxt_node, edges, visited, false);
-        }
+        dfs(*nxt_node, node, edges, reds, whites);
+        ret_r = (reds[*nxt_node] + whites[*nxt_node]) % 1000000007 * ret_r % 1000000007;
+        ret_w = reds[*nxt_node] * ret_w % 1000000007;
     }
-    visited[node] = false;
-    if is_parent_red {
-        ret_r + ret_w
-    } else {
-        ret_r
-    }
+    reds[node] = ret_r;
+    whites[node] = ret_w;
 }

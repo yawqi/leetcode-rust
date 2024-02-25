@@ -1,12 +1,13 @@
 use std::collections::HashMap;
+struct Solution;
+
 impl Solution {
     pub fn check_inclusion(s1: String, s2: String) -> bool {
         let mut map = HashMap::new();
-        s1.chars()
-            .for_each(|c| {
-                let e = map.entry(c).or_insert(0);
-                *e += 1;
-            });
+        s1.chars().for_each(|c| {
+            let e = map.entry(c).or_insert(0);
+            *e += 1;
+        });
         let s2 = s2.chars().collect::<Vec<_>>();
 
         let mut r = 0;
@@ -33,3 +34,4 @@ impl Solution {
         false
     }
 }
+

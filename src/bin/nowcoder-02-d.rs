@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 fn gcd(x: i32, y: i32) -> i32 {
     if y == 0 {
         x
@@ -31,5 +29,10 @@ fn main() {
     y /= d;
     let upperbound = r / x;
     let lowerbound = (l + y - 1) / y;
-    if upperbound > lowerbound {}
+    let count = if upperbound >= lowerbound {
+        upperbound - lowerbound + 1
+    } else {
+        0
+    };
+    println!("{}", count);
 }
